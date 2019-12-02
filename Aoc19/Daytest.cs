@@ -6,13 +6,8 @@ namespace Aoc19
     {
         public static void Main(string[] args) // Puzzle input goes into program arguments
         {
-            /*
-             * Example of testing solutions    
-             * 
-             * Console.WriteLine(Days.Day1.Part1(args));
-             * Console.WriteLine(Days.Day1.Part2(args));
-             */
-
+            Console.WriteLine();
+            Console.WriteLine("Part 1: " + Days.Day2.Part1(args) + " part 2: " + Days.Day2.Part2(args));
         }
     }
 }
