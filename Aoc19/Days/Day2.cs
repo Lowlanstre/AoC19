@@ -6,8 +6,7 @@ namespace Aoc19.Days
     {
         public static long Part1(string[] stringIntegers)
         {
-            var middleman = Regex.Replace(stringIntegers[0], ",", " ");
-            stringIntegers = middleman.Split(' ');
+            stringIntegers = Regex.Replace(stringIntegers[0], ",", " ").Split(' ');
             int[] numbers = Array.ConvertAll(stringIntegers, int.Parse);
             numbers[1] = 12;
             numbers[2] = 2;
