@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Aoc19
 {
@@ -6,8 +8,7 @@ namespace Aoc19
     {
         public static void Main(string[] args) // Puzzle input goes into program arguments
         {
-            Console.WriteLine(Days.Day4.Part1(args));
-            Console.WriteLine(Days.Day4.Part2(args));
+            Days.Day5.Part1(args);
         }
     }
 }
