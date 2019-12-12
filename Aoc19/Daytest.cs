@@ -1,14 +1,10 @@
-﻿using System;
-using System.Text.RegularExpressions;
-
-namespace Aoc19
-{
-
-    public class Day9
+﻿namespace Aoc19 {
+    
+    public static class Daytest
     {
         public static void Main(string[] args) // Puzzle input goes into program arguments
         {
-            Days.Day9.BothParts(args);
+            Days.Day12.BothParts();
         }
     }
 } 
