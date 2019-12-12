@@ -29,7 +29,6 @@ namespace Aoc19.Days
         public static void BothParts() // Puzzle input goes into program arguments
         {
             var totalenergy = 0;
-            var planets = new List<Planet>();
             var Io = new Planet(1, -4, 3);
             var Europa = new Planet(-14, 9, -4);
             var Ganymede = new Planet(-4, -6, 7);
@@ -39,10 +38,7 @@ namespace Aoc19.Days
             int[] GanymedeStart = {-4, -6, 7};
             int[] CallistoStart = {6, -9, -11};
             var planetStarts = new List<int[]> {IoStart, EuropaStart, GanymedeStart, CallistoStart};
-            planets.Add(Io);
-            planets.Add(Europa);
-            planets.Add(Ganymede);
-            planets.Add(Callisto);
+            var planets = new List<Planet> {Io, Europa, Ganymede, Callisto};
             var intervals = new int[3];
 
 
