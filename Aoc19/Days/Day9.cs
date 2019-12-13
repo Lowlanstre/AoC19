@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Aoc19.Days
 {
-    public class Day9
+    public static class Day9
     {
-        public enum Modes
+        private enum Modes
         {
             Position,
             Immediate,
@@ -14,65 +15,46 @@ namespace Aoc19.Days
         public static void BothParts(string[] args) // Puzzle input goes into program arguments
         {
             args = Regex.Replace(args[0], ",", " ").Split(' ');
-            long[] inputNumbers = Array.ConvertAll(args, long.Parse);
+            var bonusMemory = new long[1000]; // I estimated this value and 1000 suffices for our purposes.
+            var numbers = Array.ConvertAll(args, long.Parse).Concat(bonusMemory).ToArray();
             Modes[] modes = {Modes.Position, Modes.Position, Modes.Position};
             long[] numIndex = {0, 0, 0};
             long relativeIndex = 0;
-            long[] numbers = new long[10000]; // I estimated this value and 10 000 is more than enough, 1100 seems to suffice also
-            for (int i = 0; i < inputNumbers.Length; ++i)
-            {
-                numbers[i] = inputNumbers[i];
-            }
-
             for (long index = 0; index < numbers.Length;)
             {
                 modes[0] = Modes.Position;
                 modes[1] = Modes.Position;
                 modes[2] = Modes.Position;
-                string instruction = Convert.ToString(numbers[index]);
-                int translator = 0;
-                for (int pos = instruction.Length - 3; pos >= 0; pos--)
-                {
-                    if (instruction[pos] == '2')
-                    {
-                        modes[translator] = Modes.Relative;
-                    }
-                    else if (instruction[pos] == '1')
-                    {
-                        modes[translator] = Modes.Immediate;
-                    }
-
-                    ++translator;
-                }
-
+                var instruction = Convert.ToString(numbers[index]);
                 if (instruction == "99")
                     break;
-
-                if (modes[2] == Modes.Relative)
+                for (var pos = instruction.Length - 3; pos >= 0; pos--)
                 {
-                    numIndex[2] = numbers[index + 3] + relativeIndex;
+                    switch (instruction[pos])
+                    {
+                        case '1':
+                            modes[instruction.Length-3-pos] = Modes.Immediate;
+                            break;
+                        case '2':
+                            modes[instruction.Length-3-pos] = Modes.Relative;
+                            break;
+                    }
                 }
-                else
+                for (var slot = 0; slot < 3; ++slot)
                 {
-                    numIndex[2] = numbers[index + 3];
+                    switch (modes[slot])
+                    {
+                        case Modes.Relative:
+                            numIndex[slot] = numbers[index + slot + 1] + relativeIndex;
+                            break;
+                        case Modes.Immediate:
+                            numIndex[slot] = index + slot + 1;
+                            break;
+                        case Modes.Position:
+                            numIndex[slot] = numbers[index + slot + 1];
+                            break;
+                    }
                 }
-
-            for (int slot = 0; slot < 2; ++slot)
-            {
-                switch (modes[slot])
-                {
-                    case Modes.Relative:
-                        numIndex[slot] = numbers[index + slot + 1]+relativeIndex;
-                        break;
-                    case Modes.Immediate:
-                        numIndex[slot] = index + slot + 1;
-                        break;
-                    default: // Modes.Position
-                        numIndex[slot] = numbers[index + slot + 1];
-                        break;
-                }
-            }
-
                 switch (instruction[instruction.Length - 1])
                 {
                     case '1':
@@ -93,44 +75,17 @@ namespace Aoc19.Days
                         index += 2;
                         break;
                     case '5':
-                        if (numbers[numIndex[0]] != 0)
-                        {
-                            index = numbers[numIndex[1]];
-                            break;
-                        }
-
-                        index += 3;
+                        index = numbers[numIndex[0]] != 0 ? numbers[numIndex[1]] : index + 3;
                         break;
                     case '6':
-                        if (numbers[numIndex[0]] == 0)
-                        {
-                            index = numbers[numIndex[1]];
-                            break;
-                        }
-
-                        index += 3;
+                        index = numbers[numIndex[0]] == 0 ? numbers[numIndex[1]] : index + 3;
                         break;
                     case '7':
-                        if (numbers[numIndex[0]] < numbers[numIndex[1]])
-                        {
-                            numbers[numIndex[2]] = 1;
-                        }
-                        else
-                        {
-                            numbers[numIndex[2]] = 0;
-                        }
-
+                        numbers[numIndex[2]] = numbers[numIndex[0]] < numbers[numIndex[1]] ? 1 : 0;
                         index += 4;
                         break;
                     case '8':
-                        if (numbers[numIndex[0]] == numbers[numIndex[1]])
-                        {
-                            numbers[numIndex[2]] = 1;
-                        }
-                        else
-                        {
-                            numbers[numIndex[2]] = 0;
-                        }
+                        numbers[numIndex[2]] = numbers[numIndex[0]] == numbers[numIndex[1]] ? 1 : 0;
                         index += 4;
                         break;
                     case '9':
