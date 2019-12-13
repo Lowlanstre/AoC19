@@ -1,10 +1,11 @@
-﻿namespace Aoc19 {
-    
-    public static class Daytest
+﻿namespace Aoc19
+{
+    public class Daytest
     {
-        public static void Main(string[] args) // Puzzle input goes into program arguments
+        public static void Main(string[] args)
         {
-            Days.Day12.BothParts();
+            Days.Day13.BothParts(args);
         }
     }
-} 
+}
+
