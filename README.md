@@ -1,4 +1,4 @@
-# The code in this repo is absolutely awful but will serve nostalgia reason and set an example for exceptionally bad code
+# The code in this repo is absolutely awful but will serve for nostalgia reasons and set an example for exceptionally bad code
 
 # AoC19
 Shows my solutions to [Advent of Code 2019](https://adventofcode.com/), all written in c#.
